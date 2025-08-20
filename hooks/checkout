@@ -111,6 +111,7 @@ clone_repository() {
     git checkout "$checkout_ref"
   elif [[ -n "${BUILDKITE_COMMIT:-}" ]]; then
     log_info "Checking out commit: $BUILDKITE_COMMIT"
+    git fetch origin --depth=1 "$BUILDKITE_COMMIT"
     git checkout "$BUILDKITE_COMMIT"
   fi
 
