@@ -84,6 +84,10 @@ clone_repository() {
   local mirror_url="${5:-}"
   local clone_flags=("${@:6}")
 
+  echo "TEST TEST TEST 6"
+
+  set -euo pipefail
+
   log_info "Cloning repository into '$clone_dir'"
   mkdir -p "$clone_dir"
   pushd "$clone_dir" > /dev/null
@@ -109,10 +113,12 @@ clone_repository() {
   if [[ -n "$checkout_ref" ]]; then
     log_info "Checking out ref: $checkout_ref"
     git checkout "$checkout_ref"
+    echo $?
   elif [[ -n "${BUILDKITE_COMMIT:-}" ]]; then
     log_info "Checking out commit: $BUILDKITE_COMMIT"
     git fetch origin --depth=1 "$BUILDKITE_COMMIT"
     git checkout "$BUILDKITE_COMMIT"
+    echo $?
   fi
 
   if command -v git-lfs > /dev/null; then
