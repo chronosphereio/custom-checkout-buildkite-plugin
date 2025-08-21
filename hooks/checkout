@@ -84,6 +84,8 @@ clone_repository() {
   local mirror_url="${5:-}"
   local clone_flags=("${@:6}")
 
+  echo "TEST TEST TEST 3"
+
   log_info "Cloning repository into '$clone_dir'"
   mkdir -p "$clone_dir"
   pushd "$clone_dir" > /dev/null
@@ -113,6 +115,7 @@ clone_repository() {
     log_info "Checking out commit: $BUILDKITE_COMMIT"
     git fetch origin --depth=1 "$BUILDKITE_COMMIT"
     git checkout "$BUILDKITE_COMMIT"
+    exit 1
   fi
 
   if command -v git-lfs > /dev/null; then
